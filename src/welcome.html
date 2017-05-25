@@ -1,0 +1,56 @@
+<template>
+  <section class="au-animate container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h1>Memorize numbers!</h1>
+      </div>
+    </div>
+
+    <section id="menu-area" show.bind="!isRunning">
+      <form class="form">
+        <div class="form-group">
+          <label for="no-of-numbers">How many numbers?</label>
+          <input class="form-control" type="number" id="no-of-numbers" value.bind="noOfNumbers">
+        </div>
+        <div class="form-group">
+          <label for="min-number">From</label>
+          <input class="form-control" type="number" id="min-number" value.bind="minNumber">
+        </div>
+        <div class="form-group">
+          <label for="to-number">To</label>
+          <input class="form-control" type="number" id="max-number" value.bind="maxNumber">
+        </div>
+        <div class="form-group">
+          <label for="show-interval">Time per number</label>
+          <input class="form-control" type="number" id="show-interval" value.bind="showInterval">
+        </div>
+
+        <button class="btn btn-primary" click.delegate="startRound()">Start</button>
+        <button class="btn btn-success" click.delegate="showHistory()" if.bind="!isShowingHistory && numberHistory.length">Show numbers</button>
+      </form>
+    </section>
+
+    <section id="round-area" show.bind="isRunning">
+      <div class="col-sm-12">
+        Memorize!
+      </div>
+      <div class="current-number">
+        <span show.bind="!isNumberHidden">
+          ${currentNumber}
+        </span>
+      </div>
+
+      <button class="btn btn-danger" click.delegate="stopRound()">Cancel</button>
+    </section>
+
+    <section id="history" if.bind="isShowingHistory">
+      <ol>
+        <li repeat.for="num of numberHistory">
+          ${num}
+        </li>
+      </ol>
+
+      <button class="btn btn-danger" click.delegate="hideHistory()">Hide numbers</button>
+    </section>
+  </section>
+</template>

@@ -1,4 +1,6 @@
-# aurelia-skeleton-navigation (typescript)
+# Number Memory Practice
+
+This app is for the memorization technique practice from Mind Academy.
 
 ## Running The App
 
@@ -114,7 +116,7 @@ To run the app under [Electron](http://electron.atom.io), follow these steps.
   ```shell
   npm install electron-packager -g
   ```
-  
+
 3. Run the command:
 
   ```shell

@@ -9,6 +9,7 @@ var notify = require('gulp-notify');
 var browserSync = require('browser-sync');
 var typescript = require('gulp-typescript');
 var htmlmin = require('gulp-htmlmin');
+var sass = require('gulp-sass');
 
 // transpiles changed es6 files to SystemJS format
 // the plumber() call prevents 'pipe breaking' caused
@@ -21,7 +22,7 @@ gulp.task('build-system', function() {
       "typescript": require('typescript')
     });
   }
-  
+
   return gulp.src(paths.dtsSrc.concat(paths.source))
     .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
     .pipe(changed(paths.output, {extension: '.ts'}))
@@ -47,6 +48,15 @@ gulp.task('build-css', function() {
     .pipe(browserSync.stream());
 });
 
+// compiles sass files to css files
+gulp.task('build-sass', function() {
+  return gulp.src(paths.sass)
+    .pipe(plumber())
+    .pipe(changed(paths.style), {extension: '.scss'})
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('styles'));
+});
+
 // this task calls the clean task (located
 // in ./clean.js), then runs the build-system
 // and build-html tasks in parallel
@@ -54,6 +64,7 @@ gulp.task('build-css', function() {
 gulp.task('build', function(callback) {
   return runSequence(
     'clean',
+    'build-sass',
     ['build-system', 'build-html', 'build-css'],
     callback
   );
